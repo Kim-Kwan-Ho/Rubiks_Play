@@ -4,7 +4,7 @@
 
   <meta charset="UTF-8">
   <meta name="description" content="RubiksPlay puzzle game.">
-  <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,viewport-fit=cover">
 
   <title>RubiksPlay</title>
   <meta property="og:description" content="RubiksPlay puzzle game."/>
@@ -26,12 +26,76 @@
 
   <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
   <style>
+    html,
+    body {
+      width: 100%;
+      min-width: 320px;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    body {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ui {
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
     .ui__texts,
     .ui__prefs,
     .ui__theme,
     .ui__stats,
     .ui__buttons {
       display: none !important;
+    }
+
+    .ui__top-banner {
+      position: fixed;
+      top: max(calc(env(safe-area-inset-top, 0px) + 14px), clamp(16px, 3.2vh, 34px));
+      left: 50%;
+      z-index: 6;
+      transform: translateX(-50%);
+      width: min(calc(100vw - 24px), 760px);
+      padding: 0.45rem 1.2rem;
+      border: 2px solid rgba(7, 13, 21, 0.14);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #070d15;
+      font-family: 'BungeeFont', sans-serif;
+      font-size: clamp(24px, 1.8vw, 40px);
+      letter-spacing: clamp(0.04em, 0.12vw, 0.08em);
+      text-align: center;
+      text-transform: uppercase;
+      line-height: 1.05;
+      white-space: normal;
+      text-wrap: balance;
+      box-shadow: 0 10px 30px rgba(7, 13, 21, 0.08);
+      pointer-events: none;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+
+    @media (max-width: 767px) {
+      .ui__top-banner {
+        width: min(calc(100vw - 20px), 92vw);
+        padding: 0.5rem 0.85rem;
+        font-size: clamp(20px, 6vw, 30px);
+        border-radius: 24px;
+      }
+    }
+
+    @media (min-width: 1920px) {
+      .ui__top-banner {
+        width: min(760px, calc(100vw - 64px));
+        font-size: 40px;
+      }
     }
   </style>
 
@@ -45,7 +109,7 @@
   </script>
 
   <script>
-    window.gameVersion = '0.99.2';
+    window.gameVersion = '0.99.3';
   </script>
 
 </head>
@@ -56,6 +120,8 @@
     <div class="ui__background"></div>
 
     <div class="ui__game"></div>
+
+    <div class="ui__top-banner">Originality 2026</div>
 
     <div class="ui__texts">
       <h1 class="text text--title"></h1>
