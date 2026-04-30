@@ -76,13 +76,13 @@
 
 		var tile = this.getFaceTile( faceName, gridPosition );
 		var faceKey = this.faceNames[ faceName ];
+		var filePath = 'assets/images/cube-face-tiles/' + faceKey + '/' + tile.row + '-' + tile.col + '.png';
 		var faceTiles = this.faceTiles[ faceKey ];
-
-		if ( ! faceTiles ) return null;
+		if ( ! faceTiles ) return filePath;
 
 		return faceTiles[ String( tile.row ) ] && faceTiles[ String( tile.row ) ][ String( tile.col ) ]
 			? faceTiles[ String( tile.row ) ][ String( tile.col ) ]
-			: null;
+			: filePath;
 	};
 
 	proto.ensureImagePlaneGeometry = function( edge ) {
