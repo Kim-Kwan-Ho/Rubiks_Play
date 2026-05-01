@@ -20,17 +20,13 @@
         stopTween(transition.tweens && transition.tweens.float);
       } catch (error) {}
 
-      game.cube.object.position.y = transition.data && typeof transition.data.cubeY === 'number'
-        ? transition.data.cubeY
-        : -0.2;
+      game.cube.object.position.y = 0.2;
       game.cube.holder.position.set(0, 0, 0);
       game.cube.holder.rotation.set(0, 0, 0);
       game.cube.animator.position.set(0, 0, 0);
       game.cube.animator.rotation.set(0, 0, 0);
       game.controls.edges.position.y = game.cube.object.position.y;
-      game.world.camera.zoom = transition.data && typeof transition.data.cameraZoom === 'number'
-        ? transition.data.cameraZoom
-        : 0.85;
+      game.world.camera.zoom = 1.22;
       game.world.camera.updateProjectionMatrix();
       transition.activeTransitions = 0;
     }
