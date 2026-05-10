@@ -13,6 +13,12 @@
     }
 
     var transition = game.transition;
+    var originalCube = transition.cube.bind(transition);
+    var originalFloat = transition.float.bind(transition);
+    var introPlayed = false;
+    var introComplete = false;
+    var floatStarted = false;
+    var introDuration = 1800;
 
     function showCubeNow() {
       try {
@@ -31,6 +37,45 @@
       transition.activeTransitions = 0;
     }
 
+    function prepareCubeIntro() {
+      try {
+        stopTween(transition.tweens && transition.tweens.cube);
+      } catch (error) {}
+
+      game.cube.object.position.y = 0.2;
+      game.cube.holder.position.set(0, 0, 0);
+      game.cube.holder.rotation.set(0, 0, 0);
+      game.cube.animator.position.set(0, 4, 0);
+      game.cube.animator.rotation.set(-Math.PI / 3, 0, 0);
+      game.controls.edges.position.y = game.cube.object.position.y;
+      game.world.camera.zoom = 1.22;
+      game.world.camera.updateProjectionMatrix();
+    }
+
+    function playCubeIntro() {
+      if (introPlayed) {
+        if (!introComplete) return;
+        showCubeNow();
+        enablePlay();
+        return;
+      }
+
+      introPlayed = true;
+      prepareCubeIntro();
+      game.controls.disable();
+
+      if (!floatStarted) {
+        floatStarted = true;
+        originalFloat();
+      }
+
+      originalCube(true);
+      window.setTimeout(function () {
+        introComplete = true;
+        enablePlay();
+      }, introDuration);
+    }
+
     function enablePlay() {
       game.state = 1;
       game.saved = true;
@@ -42,9 +87,13 @@
       }
     }
 
-    transition.float = function () {};
+    transition.float = function () {
+      if (floatStarted) return;
+      floatStarted = true;
+      originalFloat();
+    };
     transition.cube = function (show) {
-      if (show !== false) showCubeNow();
+      if (show !== false) playCubeIntro();
       transition.activeTransitions = 0;
     };
     transition.title = function () {};
@@ -59,8 +108,7 @@
 
     game.game = function (show) {
       if (show !== false) {
-        showCubeNow();
-        enablePlay();
+        playCubeIntro();
       }
     };
     game.complete = function () {};
@@ -85,8 +133,7 @@
       game.timer.reset = function () {};
     }
 
-    showCubeNow();
-    enablePlay();
+    playCubeIntro();
   }
 
   installEmbedMode();
